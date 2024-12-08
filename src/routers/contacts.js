@@ -2,27 +2,30 @@ import { Router } from 'express';
 import ctrl from '../controllers/contacts.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import schemas from '../validation/contacts.js';
+import { authenticate } from '../middlewares/authenticate.js';
+import * as contactsSchemas from '../validation/contacts.js';
 
 const router = Router();
 
-router.get('/contacts', ctrl.getAllContactsController);
+router.use(authenticate);
 
-router.get('/contacts/:contactId', isValidId, ctrl.getContactByIdController);
+router.get('/', ctrl.getAllContactsController);
+
+router.get('/:contactId', isValidId, ctrl.getContactByIdController);
 
 router.post(
-  '/contacts',
-  validateBody(schemas.createContactSchema),
+  '/',
+  validateBody(contactsSchemas.createContactSchema),
   ctrl.createContactController,
 );
 
 router.patch(
-  '/contacts/:contactId',
+  '/:contactId',
   isValidId,
-  validateBody(schemas.updateContactSchema),
+  validateBody(contactsSchemas.updateContactSchema),
   ctrl.updateContactController,
 );
 
-router.delete('/contacts/:contactId', isValidId, ctrl.deleteContactController);
+router.delete('/:contactId', isValidId, ctrl.deleteContactController);
 
 export default router;
