@@ -35,10 +35,6 @@ const contactSchema = new Schema(
       type: String,
       default: null,
     },
-    photoPublicId: {
-      type: String,
-      default: null,
-    },
   },
 
   { versionKey: false, timestamps: true },

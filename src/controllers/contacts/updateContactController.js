@@ -10,23 +10,19 @@ export const updateContactController = async (req, res) => {
   const file = req.file;
 
   let photoUrl;
-  let photoId;
 
   if (file) {
     if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
       const photo = await saveFileToCloudinary(file);
       photoUrl = photo.secure_url;
-      photoId = photo.public_id;
     } else {
       photoUrl = await saveFileToUploadDir(file);
-      photoId = null;
     }
   }
 
   const result = await updateContact(contactId, userId, {
     ...req.body,
     photo: photoUrl,
-    photoPublicId: photoId,
   });
 
   if (!result) throw createHttpError(404, 'Contact not found');

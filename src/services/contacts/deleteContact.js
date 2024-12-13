@@ -4,7 +4,7 @@ import { deleteFileFromCloudinary } from '../../utils/cloudinaryServices.js';
 import { deleteFileFromUploadDir } from '../../utils/uploadDirServices.js';
 
 export const deleteContact = async ({ contactId, userId }) => {
-  const { photo, photoPublicId } = await Contact.findOne({
+  const { photo } = await Contact.findOne({
     _id: contactId,
     userId,
   });
@@ -13,10 +13,17 @@ export const deleteContact = async ({ contactId, userId }) => {
     userId,
   });
 
-  if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
-    if (photoPublicId) await deleteFileFromCloudinary(photoPublicId);
+  if (photo) {
+    if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
+      const splittedUrl = photo.split('/');
+      const photoPublicId = splittedUrl[splittedUrl.length - 1].replace(
+        '.jpg',
+        '',
+      );
+      await deleteFileFromCloudinary(photoPublicId);
+    }
   } else {
-    if (photo) await deleteFileFromUploadDir(photo);
+    await deleteFileFromUploadDir(photo);
   }
 
   return result;

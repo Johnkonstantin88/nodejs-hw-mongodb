@@ -17,7 +17,7 @@ export const saveFileToCloudinary = async (file) => {
   return response;
 };
 
-export const deleteFileFromCloudinary = async (id) => {
-  const response = await cloudinary.uploader.destroy(id);
+export const deleteFileFromCloudinary = async (publicId) => {
+  const response = await cloudinary.uploader.destroy(publicId);
   return response;
 };
