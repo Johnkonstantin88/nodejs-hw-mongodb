@@ -33,4 +33,12 @@ router.post(
   ctrl.resetPasswordController,
 );
 
+router.get('/get-oauth-url', ctrl.getGoogleOAuthUrlController);
+
+router.post(
+  '/confirm-oauth',
+  validateBody(authSchemas.loginWithGoogleOAuthSchema),
+  ctrl.loginWithGoogleController,
+);
+
 export default router;

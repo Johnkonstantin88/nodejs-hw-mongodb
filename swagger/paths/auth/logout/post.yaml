@@ -1,0 +1,16 @@
+tags:
+  - Auth
+summary: Logout user
+operationId: logouthUser
+description: 'Logout user'
+security: []
+parameters:
+  - name: sessionId
+    in: cookie
+    schema:
+      type: string
+      example: 67671bb236f6f120cdd1440c
+    description: Session ID
+responses:
+  '204':
+    description: User logged out

@@ -1,0 +1,69 @@
+tags:
+  - Auth
+summary: Refresh user
+operationId: refreshUser
+description: 'Refresh user'
+security: []
+parameters:
+  - name: sessionId
+    in: cookie
+    schema:
+      type: string
+      example: 67671bb236f6f120cdd1440c
+    description: Session ID
+  - name: refreshToken
+    in: cookie
+    schema:
+      type: string
+      example: e2t1gVTUdf9TK5e8oUgO399CRzEAoKube1z2cdch
+    description: Refresh token
+responses:
+  '200':
+    description: User refreshed
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully refreshed a session!'
+            data:
+              type: object
+              required:
+                - accessToken
+              properties:
+                accessToken:
+                  description: 'Access token'
+                  type: string
+                  example: ThubhinEXxXbR6BBSvUdlQO9a5qu8DC4YilaREah
+  '401':
+    description: Unauthorized error
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/schemas/401.yaml
+        examples:
+          Session not found:
+            summary: Session not found
+            value:
+              {
+                'status': 401,
+                'message': 'UnauthorizedError',
+                'data': { 'message': 'Session not found' },
+              }
+          Session token expired:
+            summary: Session token expired
+            value:
+              {
+                'status': 401,
+                'message': 'UnauthorizedError',
+                'data': { 'message': 'Session token expired' },
+              }
