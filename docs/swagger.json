@@ -196,8 +196,7 @@
                 "required": [
                   "name",
                   "phoneNumber",
-                  "contactType",
-                  "userId"
+                  "contactType"
                 ],
                 "properties": {
                   "name": {
@@ -228,11 +227,6 @@
                       "home",
                       "personal"
                     ]
-                  },
-                  "userId": {
-                    "description": "Contact's owner id",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
                   },
                   "photo": {
                     "description": "Link to contact's photo",
@@ -276,6 +270,9 @@
           },
           "400": {
             "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -333,6 +330,12 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/400-id"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "404": {
             "$ref": "#/components/responses/404"
@@ -397,11 +400,6 @@
                       "personal"
                     ]
                   },
-                  "userId": {
-                    "description": "Contact's owner id",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
-                  },
                   "photo": {
                     "description": "Link to contact's photo",
                     "type": "string",
@@ -442,6 +440,12 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/400-id"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
           "404": {
             "$ref": "#/components/responses/404"
           }
@@ -473,6 +477,12 @@
         "responses": {
           "204": {
             "description": "Contact deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400-id"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "404": {
             "$ref": "#/components/responses/404"
@@ -772,7 +782,33 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/401"
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "UnauthorizedError"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "message"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
                 },
                 "examples": {
                   "Session not found": {
@@ -1205,35 +1241,6 @@
       }
     },
     "schemas": {
-      "401": {
-        "type": "object",
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
-        "properties": {
-          "status": {
-            "type": "integer",
-            "example": 401
-          },
-          "message": {
-            "type": "string",
-            "example": "UnauthorizedError"
-          },
-          "data": {
-            "type": "object",
-            "required": [
-              "message"
-            ],
-            "properties": {
-              "message": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
       "contact": {
         "type": "object",
         "required": [
@@ -1320,8 +1327,7 @@
                   ],
                   "properties": {
                     "message": {
-                      "type": "string",
-                      "example": "Bad Request"
+                      "type": "string"
                     },
                     "errors": {
                       "type": "array",
@@ -1403,9 +1409,30 @@
                   ],
                   "properties": {
                     "message": {
-                      "type": "string",
-                      "example": "Access token expired"
+                      "type": "string"
                     }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Session not found": {
+                "summary": "Session not found",
+                "value": {
+                  "status": 401,
+                  "message": "UnauthorizedError",
+                  "data": {
+                    "message": "Session not found"
+                  }
+                }
+              },
+              "Access token expired": {
+                "summary": "Access token expired",
+                "value": {
+                  "status": 401,
+                  "message": "UnauthorizedError",
+                  "data": {
+                    "message": "Access token expired"
                   }
                 }
               }
@@ -1479,6 +1506,43 @@
                     "message": {
                       "type": "string",
                       "example": "Email in use"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400-id": {
+        "description": "Not valid Id",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "BadRequestError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Id is not valid"
                     }
                   }
                 }

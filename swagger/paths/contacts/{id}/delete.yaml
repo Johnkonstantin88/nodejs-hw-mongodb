@@ -15,5 +15,9 @@ parameters:
 responses:
   '204':
     description: Contact deleted
+  '400':
+    $ref: ../../../components/responses/400-id.yaml
+  '401':
+    $ref: ../../../components/responses/401.yaml
   '404':
     $ref: ../../../components/responses/404.yaml

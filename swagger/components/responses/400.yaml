@@ -22,7 +22,6 @@ content:
           properties:
             message:
               type: string
-              example: 'Bad Request'
             errors:
               type: array
               items:

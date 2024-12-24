@@ -21,4 +21,20 @@ content:
           properties:
             message:
               type: string
-              example: 'Access token expired'
+    examples:
+      Session not found:
+        summary: Session not found
+        value:
+          {
+            'status': 401,
+            'message': 'UnauthorizedError',
+            'data': { 'message': 'Session not found' },
+          }
+      Access token expired:
+        summary: Access token expired
+        value:
+          {
+            'status': 401,
+            'message': 'UnauthorizedError',
+            'data': { 'message': 'Access token expired' },
+          }
