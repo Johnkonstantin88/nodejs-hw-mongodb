@@ -553,30 +553,7 @@
                       "example": "Successfully registered a user!"
                     },
                     "data": {
-                      "type": "object",
-                      "required": [
-                        "_id",
-                        "name",
-                        "email"
-                      ],
-                      "properties": {
-                        "_id": {
-                          "description": "User's id",
-                          "type": "string",
-                          "example": "65e4decdd286b30065d54af9"
-                        },
-                        "name": {
-                          "description": "User's name",
-                          "type": "string",
-                          "example": "Kasey"
-                        },
-                        "email": {
-                          "description": "Registration email",
-                          "type": "string",
-                          "format": "email",
-                          "example": "kasey@mail.com"
-                        }
-                      }
+                      "$ref": "#/components/schemas/user"
                     }
                   }
                 }
@@ -1294,6 +1271,32 @@
             "description": "Link to contact's photo",
             "type": "string",
             "example": "https://res.cloudinary.com/dnzhga6bu/image/upload/image.png"
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "email"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's id",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "example": "Kasey"
+          },
+          "email": {
+            "description": "Registration email",
+            "type": "string",
+            "format": "email",
+            "example": "kasey@mail.com"
           }
         }
       }

@@ -26,8 +26,6 @@ export const updateContact = async (
     },
   );
 
-  if (!result || !result.value) return null;
-
   if (contact && contact.photo !== null) {
     if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
       const splittedUrl = contact.photo.split('/');
@@ -36,10 +34,12 @@ export const updateContact = async (
         '',
       );
       await deleteFileFromCloudinary(photoPublicId);
+    } else {
+      await deleteFileFromUploadDir(contact.photo);
     }
-  } else {
-    await deleteFileFromUploadDir(contact.photo);
   }
+
+  if (!result || !result.value) return null;
 
   return {
     contact: result.value,

@@ -24,9 +24,9 @@ export const deleteContact = async ({ contactId, userId }) => {
         '',
       );
       await deleteFileFromCloudinary(photoPublicId);
+    } else {
+      await deleteFileFromUploadDir(contact.photo);
     }
-  } else {
-    await deleteFileFromUploadDir(contact.photo);
   }
 
   return result;
